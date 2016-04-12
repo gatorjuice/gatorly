@@ -1,9 +1,11 @@
-<%= form_tag "/gurls", method: :post do %>
-  <div>
-    <%= label_tag :destination %>
-    <%= text_field_tag :destination, @gurl.dest, placeholder: "www.gatorly.com" %>
-  </div>
-  <div>
-    <%= submit_tag "Generate" %>
-  </div>
-<% end %>
+<div class="mdl-cell mdl-cell--12-col">
+  <%= form_tag "/gurls", method: :post do %>
+    <div class="mdl-textfield mdl-js-textfield">
+      <%= text_field_tag :destination, nil, class: "mdl-textfield__input text-input" %>
+      <%= label_tag :destination, "www.google.com", class: "mdl-textfield__label" %>
+    </div>
+    <div>
+      <%= submit_tag "Generate", class: "mdl-button mdl-js-button mdl-button--raised mdl-button--colored" %>
+    </div>
+  <% end %>
+</div>

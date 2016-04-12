@@ -32,11 +32,13 @@ class GurlsController < ApplicationController
   private
 
   def valid_url?(input_dest)
-    if Unirest.get(
-      Addressable::URI.heuristic_parse(input_dest).to_s
-    ).code == 200
+    begin
+      Unirest.get(
+        Addressable::URI.heuristic_parse(input_dest).to_s
+      )
       true
-    else
+    rescue
+      flash[:error] = "We don't recognize that URL. Try again."
       false
     end
   end

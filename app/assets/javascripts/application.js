@@ -12,5 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
+//= require material/mdlComponentHandler
+//= require material/rAF
+//= require material/layout
+//= require material/button
+//= require material/textfield
 //= require_tree .
