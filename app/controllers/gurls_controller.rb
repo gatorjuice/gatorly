@@ -26,7 +26,7 @@ class GurlsController < ApplicationController
 
   def redirect
     gurl = Gurl.find_by(gatorly: params[:id])
-    redirect_to gurl.dest.to_s
+    redirect_to Addressable::URI.heuristic_parse(gurl.dest).to_s
   end
 
   private
