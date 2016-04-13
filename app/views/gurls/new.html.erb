@@ -1,11 +1,26 @@
 <div class="mdl-cell mdl-cell--12-col">
   <%= form_tag "/gurls", method: :post do %>
+    <div>
+      <h6>Enter the Destination URL.</h6>
+    </div>
     <div class="mdl-textfield mdl-js-textfield">
       <%= text_field_tag :destination, nil, class: "mdl-textfield__input text-input" %>
       <%= label_tag :destination, "www.google.com", class: "mdl-textfield__label" %>
     </div>
     <div>
       <%= submit_tag "Generate", class: "mdl-button mdl-js-button mdl-button--raised mdl-button--colored" %>
+    </div>
+    <div>
+      <h6>Add a quote?</h6>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield">
+      <%= text_field_tag :author, nil, class: "mdl-textfield__input text-input" %>
+      <%= label_tag :author, "Author", class: "mdl-textfield__label" %>
+    </div>
+    <div></div>
+    <div class="mdl-textfield mdl-js-textfield">
+      <%= text_area_tag :body, nil, class: "mdl-textfield__input text-input", rows: 5 %>
+      <%= label_tag :body, "Quote", class: "mdl-textfield__label"%>
     </div>
   <% end %>
 </div>
