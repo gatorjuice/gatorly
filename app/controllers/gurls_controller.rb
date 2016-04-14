@@ -5,34 +5,39 @@ class GurlsController < ApplicationController
   end
 
   def create
-    destination = params[:destination] 
-    if valid_url?(destination)
-      @gurl = Gurl.new(
-        dest: destination,
-        gatorly: (0...7).map { ('a'..'z').to_a[rand(26)] }.join
-      )
-      if @gurl.save
-        unless params[:author].blank? && params[:body].blank?
-          Quote.create(
-            author: params[:author],
-            body: params[:body]
+    destination = params[:destination]
+    if !params[:destination].blank? && Gurl.exists?(dest: destination)
+      @gurl = Gurl.find_by(dest: destination)
+      @quote = get_quote
+      render "show.html.erb"
+    else
+      if valid_url?(destination)
+        @gurl = Gurl.new(
+          dest: destination,
+          gatorly: (0...7).map { ('a'..'z').to_a[rand(26)] }.join
           )
+        if @gurl.save
+          unless params[:author].blank? && params[:body].blank?
+            Quote.create(
+              author: params[:author],
+              body: params[:body]
+              )
+          end
+          redirect_to "/generate/#{@gurl.gatorly}"
+        else
+          @url_message = "There was a problem, try submitting again."
+          render "new.html.erb"
         end
-        redirect_to "/generate/#{@gurl.gatorly}"
       else
-        @url_message = "There was a problem, try submitting again."
+        @url_message = "We don't recognize that URL. Please try again."
         render "new.html.erb"
       end
-    else
-      @url_message = "We don't recognize that URL. Please try again."
-      render "new.html.erb"
     end
   end
 
   def show
     @gurl = Gurl.find_by(gatorly: params[:gatorly])
-    offset = rand(Quote.count)
-    @quote = Quote.offset(offset).first
+    @quote = get_quote
   end
 
   def redirect
@@ -46,10 +51,15 @@ class GurlsController < ApplicationController
     begin
       Unirest.get(
         Addressable::URI.heuristic_parse(input_dest).to_s
-      )
+        )
       true
     rescue
       false
     end
+  end
+
+  def get_quote
+    offset = rand(Quote.count)
+    Quote.offset(offset).first
   end
 end
