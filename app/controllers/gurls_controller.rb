@@ -11,7 +11,7 @@ class GurlsController < ApplicationController
         gatorly: (0...7).map { ('a'..'z').to_a[rand(26)] }.join
       )
       if @gurl.save
-        if params[:author] && params[:body]
+        unless params[:author].blank? && params[:body].blank?
           Quote.create(
             author: params[:author],
             body: params[:body]
