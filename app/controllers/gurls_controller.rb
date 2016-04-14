@@ -19,10 +19,10 @@ class GurlsController < ApplicationController
         end
         redirect_to "/generate/#{@gurl.gatorly}"
       else
-        render "new.html.erb"
+        redirect_to "/generate"
       end
     else
-      render "new.html.erb"
+      redirect_to "/generate"
     end
   end
 
