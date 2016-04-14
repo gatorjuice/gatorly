@@ -1,5 +1,6 @@
 class GurlsController < ApplicationController
   def new
+    @url_message = "Enter the destination URL."
     @gurl = Gurl.new
   end
 
@@ -19,10 +20,12 @@ class GurlsController < ApplicationController
         end
         redirect_to "/generate/#{@gurl.gatorly}"
       else
-        redirect_to "/generate"
+        @url_message = "There was a problem, try submitting again."
+        render "new.html.erb"
       end
     else
-      redirect_to "/generate"
+      @url_message = "We don't recognize that URL. Please try again."
+      render "new.html.erb"
     end
   end
 
@@ -46,7 +49,6 @@ class GurlsController < ApplicationController
       )
       true
     rescue
-      flash[:error] = "We don't recognize that URL. Try again."
       false
     end
   end
